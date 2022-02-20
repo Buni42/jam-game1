@@ -1,40 +1,68 @@
 extends KinematicBody2D
 
-export var max_speed_default: = Vector2(120.0, 350.0) 	#speed clamp X & Y
+export var max_speed_default: = Vector2(120.0, 550.0) 	#speed clamp X & Y
+export var max_sprintspeed_default: = Vector2(300.0, 550.0) 	#speed clamp X & Y
 export var acceleration_default: = Vector2(240, 1000.0)	#Acceleration & gravity
-export var jump_impulse: = 350.0						#Jump force
+export var jump_impulse: = 550.0						#Jump force
 export var friction_default: = 0.15						#Slipery stop
 
 const FLOOR_NORMAL: = Vector2.UP
 
 var acceleration: = acceleration_default
 var max_speed: = max_speed_default
+var max_sprintspeed: = max_sprintspeed_default
 var velocity: = Vector2.ZERO
 var friction: = friction_default
 var direction: = Vector2.DOWN
 
-
-	
 func _physics_process(delta):
-	
 	direction = get_move_direction()
 	velocity = calculate_velocity(delta)
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
-		
 		velocity.y = -jump_impulse
+		$AnimationTree.set("parameters/OneShot_jump/active", true)
+		if direction.x == -1:
+			$AnimatedSprite.flip_h = true
+			$CollisionPolygon2D.scale.x = -1
+			$CollisionPolygon2D.position.x = -5
+		else:
+			$AnimatedSprite.flip_h = false
+			$CollisionPolygon2D.scale.x = 1
+			$CollisionPolygon2D.position.x = -1.18
+		
 	velocity = move_and_slide(velocity, FLOOR_NORMAL, false, 4, PI/4, false)
 
 func calculate_velocity(delta: float) -> Vector2:
 	var new_velocity: = velocity #Use temporary variable in case we want to manipulate the value later
 	#HORIZONTAL
-	if direction.x!=0:
+	if direction.x != 0   :
+		$AnimationTree.set("parameters/OneShot_idle/active", false)
+		$AnimationTree.set("parameters/walk_run/blend_amount", 0)
 		new_velocity.x += direction.x * acceleration.x * delta
-		$AnimationPlayer.play("walk")
-		new_velocity.x = clamp(new_velocity.x, -max_speed.x, max_speed.x)
+		new_velocity.x = clamp(new_velocity.x, -max_speed.x, max_speed.x) 
+		print(new_velocity.x)
+#		print(direction.x)
+		if direction.x == -1:
+			$AnimatedSprite.flip_h = true
+			$CollisionPolygon2D.scale.x = -1
+			$CollisionPolygon2D.position.x = -5
+		else:
+			$AnimatedSprite.flip_h = false
+			$CollisionPolygon2D.scale.x = 1
+			$CollisionPolygon2D.position.x = -1.18
+		
+		if Input.is_action_pressed("sprint"):
+			$AnimationTree.set("parameters/OneShot_idle/active", false)
+			$AnimationTree.set("parameters/walk_run/blend_amount", 1)
+			new_velocity.x += direction.x * (acceleration.x*100)  * delta
+			new_velocity.x = clamp(new_velocity.x, -max_sprintspeed.x, max_sprintspeed.x)
+			print(new_velocity.x)
 
 	else: #deaccelerate X
+#		$AnimationTree.set("parameters/walk_run/blend_amount", 0)
+		$AnimationTree.set("parameters/OneShot_idle/active", true)
 		new_velocity.x = approach(new_velocity.x, 0, abs(new_velocity.x*friction))
-		$AnimationPlayer.play("idle")
+		
 
 	
 	#VERTICAL
@@ -53,3 +81,4 @@ static func approach(start: float, end: float, amount: float):
 		return min(start + amount, end)
 	else:
 		return max(start - amount, end)
+
