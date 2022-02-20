@@ -13,7 +13,10 @@ var velocity: = Vector2.ZERO
 var friction: = friction_default
 var direction: = Vector2.DOWN
 
+
+	
 func _physics_process(delta):
+	
 	direction = get_move_direction()
 	velocity = calculate_velocity(delta)
 	if is_on_floor() and Input.is_action_just_pressed("jump"):

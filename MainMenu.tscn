@@ -126,7 +126,7 @@ focus_neighbour_bottom = NodePath("../NewButton")
 theme = SubResource( 10 )
 text = "Quit Game"
 
-[connection signal="pressed" from="VBoxContainer/NewButton" to="." method="_on_NEW_pressed"]
+[connection signal="pressed" from="VBoxContainer/NewButton" to="." method="_on_NewButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/LOAD" to="." method="_on_LOAD_pressed"]
 [connection signal="pressed" from="VBoxContainer/OPTIONS" to="." method="_on_OPTIONS_pressed"]
 [connection signal="pressed" from="VBoxContainer/QUIT" to="." method="_on_QUIT_pressed"]

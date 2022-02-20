@@ -1,17 +1,55 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://warped city files/demo/assets/environment/bg-1.png" type="Texture" id=2]
+[ext_resource path="res://warped city files/demo/assets/environment/bg-3.png" type="Texture" id=3]
+[ext_resource path="res://warped city files/demo/assets/environment/bg-2.png" type="Texture" id=4]
+[ext_resource path="res://turret.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 514.991, 10 )
 
 [node name="world" type="Node2D"]
 
+[node name="turret" parent="." instance=ExtResource( 5 )]
+position = Vector2( 520, 240 )
+
 [node name="player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 314.663, 156.906 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( 454.831, 258.284 )
 shape = SubResource( 1 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.001, 1 )
+motion_mirroring = Vector2( 1248, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( -224, -176 )
+scale = Vector2( 3.25, 3.46429 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.3, 1 )
+motion_mirroring = Vector2( 1024.13, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+scale = Vector2( 2.66667, 2.67857 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 1024.14, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+scale = Vector2( 1.01487, 2.67857 )
+texture = ExtResource( 3 )
+centered = false
