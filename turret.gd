@@ -8,16 +8,16 @@ var rof = 1
 var playerpos
 
 
-func _physics_process(delta):
-	if Detected and ready:
-		BulletSpawn()
+func _physics_process(_delta):
+	if Detected:
+		if ready:
+			BulletSpawn()
 
 
 func BulletSpawn():
 	ready = false
 	print (playerpos)
 	bullet = Bullet.instance()
-#	bullet.position = position
 	bullet.rotation = Vector2(1, 0).angle_to((playerpos - position).normalized())
 	$BulletContainer.add_child(bullet)
 	$Timer.start(rof); yield($Timer, "timeout")
@@ -29,6 +29,6 @@ func _on_Area2D_body_entered(body):
 	Detected = true
 	playerpos = body.position
 
-func _on_Area2D_body_exited(body):
+func _on_Area2D_body_exited(_body):
 	Detected = false
 

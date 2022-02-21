@@ -7,13 +7,15 @@ func _ready():
 
 
 func _on_NewButton_pressed():
-	get_tree().change_scene("res://world.tscn")
+# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://scenes/world.tscn")
 	
 func _on_LOAD_pressed():
 	pass 
 	
 func _on_OPTIONS_pressed():
-	get_tree().change_scene("res://Options.tscn")
+# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://scenes/Options.tscn")
 	
 func _on_QUIT_pressed():
 	get_tree().quit()
