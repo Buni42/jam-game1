@@ -11,12 +11,13 @@ config_version=4
 [application]
 
 config/name="jam game 1"
-run/main_scene="res://scenes/MainMenu.tscn"
+run/main_scene="res://scenes/SceneSwitcher.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Game="*res://scripts/game.gd"
+Globals="*res://Globals.gd"
 
 [display]
 
@@ -50,6 +51,8 @@ sprint={
 
 2d_physics/layer_1="turret"
 2d_physics/layer_2="player"
+2d_physics/layer_3="bullet"
+2d_physics/layer_4="staticcoll"
 
 [physics]
 
