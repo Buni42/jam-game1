@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://warped city files/SPRITES/player/back-jump/back-jump-7.png" type="Texture" id=1]
 [ext_resource path="res://warped city files/SPRITES/player/run/run-1.png" type="Texture" id=2]
@@ -54,6 +54,7 @@
 [ext_resource path="res://warped city files/SPRITES/player/walk/walk-2.png" type="Texture" id=52]
 [ext_resource path="res://warped city files/SPRITES/player/idle/idle-4.png" type="Texture" id=53]
 [ext_resource path="res://scripts/player.gd" type="Script" id=54]
+[ext_resource path="res://Camera.tscn" type="PackedScene" id=55]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -61,21 +62,6 @@ animations = [ {
 "loop": true,
 "name": "idle",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 23 ), ExtResource( 24 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 47 ), ExtResource( 48 ) ],
-"loop": true,
-"name": "run-shoot",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 20 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "jump",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 7 ), ExtResource( 26 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 1 ) ],
-"loop": true,
-"name": "back-jump",
-"speed": 10.0
 }, {
 "frames": [ ExtResource( 2 ), ExtResource( 9 ), ExtResource( 16 ), ExtResource( 3 ), ExtResource( 19 ), ExtResource( 10 ), ExtResource( 25 ), ExtResource( 33 ) ],
 "loop": true,
@@ -87,10 +73,25 @@ animations = [ {
 "name": "walk",
 "speed": 10.0
 }, {
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 20 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "jump",
+"speed": 10.0
+}, {
 "frames": [ ExtResource( 27 ), ExtResource( 32 ), ExtResource( 14 ), ExtResource( 30 ), ExtResource( 28 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "climb",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 24 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 47 ), ExtResource( 48 ) ],
+"loop": true,
+"name": "run-shoot",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 26 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "back-jump",
+"speed": 10.0
 } ]
 
 [sub_resource type="Animation" id=2]
@@ -290,11 +291,14 @@ nodes/OneShot_jump/position = Vector2( 980, 80 )
 nodes/output/position = Vector2( 1180, 20 )
 nodes/walk_run/node = SubResource( 12 )
 nodes/walk_run/position = Vector2( 544, 99.6 )
-node_connections = [ "output", 0, "OneShot_jump", "walk_run", 0, "Animation 2", "walk_run", 1, "Animation 3", "OneShot_idle", 0, "walk_run", "OneShot_idle", 1, "Animation", "OneShot_jump", 0, "OneShot_idle", "OneShot_jump", 1, "Animation 4" ]
+node_connections = [ "output", 0, "OneShot_jump", "OneShot_jump", 0, "OneShot_idle", "OneShot_jump", 1, "Animation 4", "walk_run", 0, "Animation 2", "walk_run", 1, "Animation 3", "OneShot_idle", 0, "walk_run", "OneShot_idle", 1, "Animation" ]
+
+[sub_resource type="CapsuleShape2D" id=14]
+radius = 6.0
+height = 30.0
 
 [node name="player" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 5
 script = ExtResource( 54 )
 __meta__ = {
 "_edit_horizontal_guides_": [ -17.301 ]
@@ -304,7 +308,6 @@ __meta__ = {
 position = Vector2( -3.84462, -1.72089 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 2 )
@@ -314,7 +317,7 @@ anims/walk = SubResource( 5 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( -1.17984, 24.0688 )
-polygon = PoolVector2Array( 3.30773, -33.8568, 1.2748, -34.4755, 1.71677, -32.7078, 2.07032, -27.4045, 2.15871, -23.9573, 4.10326, -13.0856, 1.62838, -18.1237, 0.198227, -14.0907, 3.48454, -5.57256, 3.92648, -1.77185, 1.98193, 6.97859, -0.0509987, 6.80182, -0.846493, -3.7164, -3.8517, 8.21603, -6.06141, 7.77409, -5.3543, -8.13582, -7.35277, -14.0907, -6.06145, -15.6488, -5.26591, -20.8637, -9.86211, -11.3178, -6.68012, -26.1671, -5.97301, -32.3542, -7.65239, -36.4201, -4.64719, -41.1931, 0.125786, -41.3699 )
+polygon = PoolVector2Array( 2.79388, -37.6876, 3.50179, -31.5524, 11.0528, -25.1812, 11.0528, -22.3496, 4.2097, -24.0014, 2.79388, -21.8777, 6.56938, -15.7425, 4.68164, -15.2705, 7.27728, 3.60694, 5.6255, 4.07888, 7.51326, 7.85438, 1.61404, 7.61841, 4.2097, 5.49469, 4.2097, -0.404518, 2.79388, -1.11243, 1.61404, -4.41599, 0.906128, -10.5512, -0.509674, -9.84327, -0.981613, -3.47211, -3.81323, 3.13501, -4.75711, 5.02276, -2.39743, 7.14648, -7.11679, 7.85438, -7.58873, 5.49469, -6.64487, 5.73066, -6.64487, -2.0563, -4.04921, -7.01164, -4.99307, -12.2029, -8.76857, -13.8547, -6.88083, -16.4504, -6.64487, -20.6978, -9.47649, -21.8777, -5.22905, -28.9567, -7.11679, -29.4287, -7.35277, -36.2717, -4.28517, -37.9235 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 13 )
@@ -323,3 +326,15 @@ active = true
 parameters/OneShot_idle/active = true
 parameters/OneShot_jump/active = false
 parameters/walk_run/blend_amount = 0
+
+[node name="Camera2D" parent="." instance=ExtResource( 55 )]
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2( -2, 8 )
+shape = SubResource( 14 )
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]

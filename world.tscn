@@ -9,27 +9,26 @@
 [ext_resource path="res://scripts/game_save.gd" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 514.991, 10 )
+extents = Vector2( 2216, 9 )
 
 [node name="world" type="Node2D"]
 script = ExtResource( 6 )
 GameSaveClass = ExtResource( 7 )
 
 [node name="turret" parent="." instance=ExtResource( 5 )]
-position = Vector2( 520, 240 )
+position = Vector2( 520, 328 )
 collision_layer = 4
-collision_mask = 2
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 314.663, 156.906 )
+position = Vector2( 328, 304 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 67, 7 )
-collision_layer = 4
-collision_mask = 4
+collision_layer = 8
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 454.831, 258.284 )
+position = Vector2( 749, 336 )
 shape = SubResource( 1 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -40,9 +39,10 @@ motion_mirroring = Vector2( 1248, 0 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2( -224, -176 )
-scale = Vector2( 3.25, 3.46429 )
+scale = Vector2( 3.25, 3.76 )
 texture = ExtResource( 2 )
 centered = false
+offset = Vector2( 0, -17 )
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2( 0.3, 1 )

@@ -4,7 +4,7 @@ export (PackedScene)var Bullet
 var Detected = false
 var ready = true
 var bullet
-var rof = 1
+var rof = Game.enemy_data["turret"]['rof']
 var playerpos
 
 
@@ -15,8 +15,8 @@ func _physics_process(_delta):
 
 
 func BulletSpawn():
+	print(playerpos)
 	ready = false
-	print (playerpos)
 	bullet = Bullet.instance()
 	bullet.rotation = Vector2(1, 0).angle_to((playerpos - position).normalized())
 	$BulletContainer.add_child(bullet)
@@ -25,7 +25,6 @@ func BulletSpawn():
 	
 	
 func _on_Area2D_body_entered(body):
-	print(Game.playerPos)
 	Detected = true
 	playerpos = body.position
 

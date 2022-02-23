@@ -5,11 +5,18 @@ export(Script) var GameSaveClass
 var saved_vars = ["PlayerPos", "PlayerHealth", "PlayerAmmo", "Enemies"]
 
 func _ready() -> void:
-	loadGame()
+	Game.playerStartPos = $player.position
+	Game.game_state = "playing"
+	Globals.world = self
+	if Game.load_game == true:
+		loadGame()
+	Game.load_game = false
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.scancode == KEY_J:
+	if event is InputEventKey and event.scancode == KEY_ESCAPE:
 		saveGame()
+
+
 
 ##
 ## save and load Functions
@@ -24,6 +31,7 @@ func saveGame():
 	var dir = Directory.new()
 	var new_save = GameSaveClass.new()
 	new_save.PlayerPos = $player.position
+	new_save.PlayerHealth = Game.playerhealth
 	if not dir.dir_exists("res://saves/"):
 		dir.make_dir_recursive("res://saves/")
 
@@ -40,7 +48,7 @@ func loadGame():
 		return false
 	
 	$player.position = game_save.PlayerPos
+	Game.playerhealth = game_save.PlayerHealth
 	print("game loaded")
 	return true
 	pass
-

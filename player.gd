@@ -4,7 +4,8 @@ export var max_speed_default: = Vector2(120.0, 550.0) 	#speed clamp X & Y
 export var max_sprintspeed_default: = Vector2(300.0, 550.0) 	#speed clamp X & Y
 export var acceleration_default: = Vector2(240, 1000.0)	#Acceleration & gravity
 export var jump_impulse: = 550.0						#Jump force
-export var friction_default: = 0.15						#Slipery stop
+export var friction_default: = 0.15						#Slipery st
+
 
 const FLOOR_NORMAL: = Vector2.UP
 
@@ -16,10 +17,12 @@ var friction: = friction_default
 var direction: = Vector2.DOWN
 
 
-
 func _physics_process(delta):
 	direction = get_move_direction()
 	velocity = calculate_velocity(delta)
+	
+	if Game.playerhealth <= 0:
+		death()
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -jump_impulse
 		$AnimationTree.set("parameters/OneShot_jump/active", true)
@@ -84,3 +87,16 @@ static func approach(start: float, end: float, amount: float):
 	else:
 		return max(start - amount, end)
 
+
+
+func _on_hitbox_body_entered(body):
+	Game.playerhealth -= body.damage
+	Globals.camera.shake(2500, 0.1 ,15000)
+	body.queue_free()
+	print(Game.playerhealth)
+
+func death():
+	print('ded')
+# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://scenes/MainMenu.tscn")
+	Game.game_state = "death"
