@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://PauseMenu.gd" type="Script" id=1]
+
+[node name="PauseMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -96.0
+margin_top = 216.0
+margin_right = 96.0
+margin_bottom = -208.0
+color = Color( 0.67451, 0.67451, 0.67451, 0.439216 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0352941, 0.0352941, 0.0823529, 0.376471 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 459.0
+margin_top = 252.0
+margin_right = 565.0
+margin_bottom = 348.0
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 106.0
+margin_bottom = 14.0
+text = "PAUSED"
+align = 1
+valign = 1
+
+[node name="Control" type="Control" parent="CenterContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 106.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 30 )
+
+[node name="ResumeBtn" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 52.0
+margin_right = 106.0
+margin_bottom = 72.0
+text = "Resume Game"
+
+[node name="SaveAndExitBtn" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 76.0
+margin_right = 106.0
+margin_bottom = 96.0
+text = "save and exit"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ResumeBtn" to="." method="_on_ResumeBtn_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/SaveAndExitBtn" to="." method="_on_SaveAndExitBtn_pressed"]
